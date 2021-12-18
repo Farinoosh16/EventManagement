@@ -1,0 +1,37 @@
+#: include KV/homescreen.kv
+#: include KV/signupscreen.kv
+#: include KV/loginscreen.kv
+#: include KV/forgetscreen.kv
+#: include KV/profilescreen.kv
+
+
+GridLayout:
+    cols:1
+    FloatLayout:
+        ScreenManager:
+            size_hint: 1,1
+            pos_hint:{"top":1,"left":1}
+            id: screen_manager
+            LoginScreen:
+                name: "login_screen"
+                id: login_screen
+            HomeScreen:
+                name:"home_screen"
+                id:home_screen
+            ProfileScreen:
+                name:"profile_screen"
+                id:"profile_screen"
+            SignupScreen:
+                name:"signup_screen"
+                id:signup_screen
+            ForgetScreen:
+                name:"forget_screen"
+                id:"forget_screen"
+
+
+
+
+
+
+
+

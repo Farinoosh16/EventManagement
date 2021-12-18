@@ -1,0 +1,75 @@
+#: import utils kivy.utils
+<HomeScreen>:
+    FloatLayout:
+        canvas:
+            Color:
+                rgb: utils.get_color_from_hex("#808080")
+            Rectangle:
+                size: self.size
+                pos: self.pos
+        GridLayout:
+            canvas:
+                Color:
+                    rgb: utils.get_color_from_hex("#808080")
+                Rectangle:
+                    size: self.size
+                    pos: self.pos
+            rows:1
+            pos_hint:{"top":1,"left":1}
+            size_hint: 1.8,.1
+            Image:
+                source:"icons/Logo_Red_Yellow.png"
+        Label:
+            pos_hint:{"top":1,"left":1}
+            size_hint: 1,.1
+            text: root.t
+            multiline: False
+            write_tab: False
+        Label:
+            # upcoming events
+            pos_hint:{"top":.9,"left":1}
+            size_hint: 1,.1
+            text: " upcoming events"
+            font_size: 32
+            color:(211,211,211)
+            bold: True
+            italic: True
+            id : events_label
+
+        ScrollView:
+            pos_hint:{"top": .6, "left" :1 }
+            size_hint: 1, .4
+            GridLayout:
+                id: banner_grid
+                cols:1
+                spacing : 10,10
+                size_hint_y: None
+                height: self.minimum_height
+                row_default_height: '100dp'
+                row_force_default: True
+        GridLayout:
+            # add 3 menu buttons
+            rows:1
+            pos_hint:{"top":.2,"left":1}
+            size_hint: 1,.2
+            ImageButton:
+                source: "icons/finance.png"
+                on_release:
+                    print("ok dude")
+            ImageButton:
+                source: "icons/finance.png"
+                on_release:
+                    print("ok dude")
+            ImageButton:
+                source: "icons/profile.png"
+                on_release:
+                    app.change_screen("profile_screen")
+
+            ImageButton:
+                source: "icons/finance.png"
+                on_release:
+                    print("ok dude")
+
+
+
+

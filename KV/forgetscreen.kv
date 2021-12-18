@@ -1,0 +1,14 @@
+<ForgetScreen>:
+    canvas:
+        Color:
+            rgb: utils.get_color_from_hex("#9932CC")
+        Rectangle:
+            size: self.size
+            pos: self.pos
+    FloatLayout:
+        TextInput:
+            id: forget_password
+            hint_text: "enter your email address"
+            size_hint: .8,.1
+            pos_hint: {"top" : .9 , "right" : .9}
+

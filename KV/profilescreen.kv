@@ -1,0 +1,17 @@
+#: import utils kivy.utils
+
+
+<ProfileScreen>:
+    GridLayout:
+        canvas:
+            Color:
+                rgb: utils.get_color_from_hex("#808080")
+            Rectangle:
+                size: self.size
+                pos: self.pos
+        rows:1
+        pos_hint:{"top":1,"left":.1}
+        size_hint: 1,.1
+        Image:
+            source:"icons/profile.png"
+            id : avatar_image
