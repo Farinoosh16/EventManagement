@@ -1,0 +1,170 @@
+
+#: import utils kivy.utils
+
+<AddEventScreen>:
+    FloatLayout:
+        canvas:
+            Color:
+                rgb: utils.get_color_from_hex("#FFFFFF")
+            Rectangle:
+                size: self.size
+                pos: self.pos
+        GridLayout:
+            canvas:
+                Color:
+                    rgb: utils.get_color_from_hex("#808080")
+                Rectangle:
+                    size: self.size
+                    pos: self.pos
+            rows:1
+            pos_hint:{"top":1,"left":1}
+            size_hint: 1.8,.1
+            Image:
+                source:"icons/Logo_Red_Yellow.png"
+        Label:
+            pos_hint:{"top":1,"left":1}
+            size_hint: 1,.1
+            text: root.t
+            multiline: False
+            write_tab: False
+        Label:
+            text: "select event image"
+            color:(211,211,211)
+            id: select_event_image_label
+            size_hint: 1, .3
+            pos_hint: {"top": 1, "right": 1}
+        ScrollView:
+            size_hint: 1, .15
+            pos_hint: {"top": .80, "right": 1}
+            GridLayout:
+                rows: 1
+                size_hint_x: None
+                width: self.minimum_width
+                col_default_width: '100dp'
+                col_force_default: True
+                id: event_image_grid
+
+        TextInput:
+            hint_text: " event name"
+            size_hint: .8, .1
+            pos_hint: {"top": .62, "right": .9}
+            id:'event_name'
+            on_text:
+                self.focus = not self.focus if "\n" in self.text else self.focus
+        TextInput:
+            hint_text: "event song"
+            size_hint: .8, .1
+            pos_hint: {"top": .52, "right": .9}
+            id:'event_song'
+            on_text:
+                self.focus = not self.focus if "\n" in self.text else self.focus
+        GridLayout:
+            rows: 1
+            size_hint: 1,.1
+            pos_hint: {"top": .42, "right": 1}
+            ImageButton:
+                source: "icons/private.png"
+                on_release:
+                    private_label.color = (1,0,1,1)
+                    back_label.color = (0,0,0,1)
+                    app.option_choice = self.source
+            ImageButton:
+                source: "icons/back.png"
+                on_release:
+                    back_label.color = (1,0,1,1)
+                    private_label.color = (0,0,0,1)
+                    app.option_choice = self.source
+        GridLayout:
+            rows: 1
+            size_hint: 1, .05
+            pos_hint: {"top": .32, "right": 1}
+            Label:
+                color: (0,0,0,1)
+                text: "private"
+                id: private_label
+            Label:
+                color: (0,0,0,1)
+                text: "public"
+                id: back_label
+        Label:
+            size_hint: .2, .05
+            pos_hint: {"top": .27, "right": .5}
+            color: (0,0,0,1)
+            text: "max number of participants"
+            bold: True
+            font_size:15
+            id: number_label
+        TextInput:
+            size_hint: .2, .05
+            pos_hint: {"top": .27, "right": 0.9}
+            hint_text: "number"
+            id: number_input
+            on_text:
+                self.background_color = (1,1,1,1)
+        TextInput:
+            size_hint: .1, .05
+            pos_hint: {"top": .2, "right": .9}
+            hint_text: "MM"
+            id: month_input
+            on_text:
+                self.background_color = (1,1,1,1)
+                self.focus = not self.focus if "\n" in self.text else self.focus
+        TextInput:
+            size_hint: .1, .05
+            pos_hint: {"top": .2, "right": .6}
+            hint_text: "DD"
+            id: day_input
+            on_text:
+                self.background_color = (1,1,1,1)
+                self.focus = not self.focus if "\n" in self.text else self.focus
+        TextInput:
+            size_hint: .1, .05
+            pos_hint: {"top": .2, "right": .3}
+            hint_text: "YY"
+            id: year_input
+            on_text:
+                self.background_color = (1,1,1,1)
+                self.focus = not self.focus if "\n" in self.text else self.focus
+        LabelButton:
+            text: "[u]add event[/u]"
+            canvas.before:
+                Color:
+                    rgb: utils.get_color_from_hex("#35477d") if self.state == 'normal' else utils.get_color_from_hex("#6C5B7B")
+                Rectangle:
+                    size: self.size
+                    pos: self.pos
+            size_hint: .2, .1
+            pos_hint: {"top": .1, "right": .9}
+            markup: True
+            on_release:
+                app.add_event()
+        LabelButton:
+            text: "[u]Back[/u]"
+            canvas.before:
+                Color:
+                    rgb: utils.get_color_from_hex("#35477d") if self.state == 'normal' else utils.get_color_from_hex("#6C5B7B")
+                Rectangle:
+                    size: self.size
+                    pos: self.pos
+            size_hint: .2, .1
+            pos_hint: {"top": .1, "right": .6}
+            markup: True
+            on_release:
+                app.change_screen("home_screen")
+        LabelButton:
+            text: "[u]when to meet[/u]"
+            #id : date_label
+            canvas.before:
+                Color:
+                    rgb: utils.get_color_from_hex("#35477d") if self.state == 'normal' else utils.get_color_from_hex("#6C5B7B")
+                Rectangle:
+                    size: self.size
+                    pos: self.pos
+            size_hint: .2, .1
+            pos_hint: {"top": .1, "right": .3}
+            markup: True
+            on_release:
+                app.change_screen("date_screen")
+                #app.show_date_picker()
+
+

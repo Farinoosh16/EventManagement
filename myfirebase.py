@@ -15,34 +15,33 @@ class MyFirebase():
         print(sign_up_request.ok)
         print(sign_up_request.content.decode())
         sign_up_data = json.loads(sign_up_request.content.decode())
-
+        print(sign_up_data)
 
         if sign_up_request.ok == True:
             refresh_token = sign_up_data['refreshToken']
             localId = sign_up_data['localId']
             idToken = sign_up_data['idToken']
-
             # Save refreshToken to a file
             with open("refresh_Token.txt", "w") as f:
                 f.write(refresh_token)
-
             # Save localId to a variable in main app class
             # Save idToken to a variable in main app class
-
             app.local_id = localId
             app.id_token = idToken
 
-            #get user id
-            #get request on firebase to get the user
-            user_get_req = requests.get("https://wazzup-1bca4-default-rtdb.firebaseio.com/next_user_id.json?auth=" + idToken)
-        
-            print("user",user_get_req.json())
-            new_user_id = user_get_req.json()
+            #get friend ID
+            #get request on firebase to get next friend ID
+            friend_get_req = requests.get("https://wazzup-1bca4-default-rtdb.firebaseio.com/next_friend_id.json?auth=" + idToken)
+            my_friend_id =friend_get_req.json()
+            friend_patch_data='{"next_friend_id": %s}' % str(my_friend_id+1)
+            friend_patch_req=requests.patch("https://wazzup-1bca4-default-rtdb.firebaseio.com/.json?auth=" + idToken,data = friend_patch_data)
+
+            print("friend",friend_get_req.json())
+            #new_user_id = user_get_req.json()
             #update firebase's user id field
-            #user_patch_data='{"new_user_id": %s}' % str(next_user_id+1)
-            #user_patch_req=requests.patch("https://wazzup-1bca4-default-rtdb.firebaseio.com/.json?auth=" + idToken,data = user_patch_data)
+
             #Create new key in database from localId
-            my_data='{"email": "" , "password" : "" , "new_user_id": ""}'
+            my_data='{"email": "" , "password" : ""  , "avatar":"", "my_friend_id" : %s}' % my_friend_id
             post_request= requests.patch("https://wazzup-1bca4-default-rtdb.firebaseio.com/"+localId+".json?auth="+idToken,data=my_data)
             print(post_request.ok)
             print(json.loads(post_request.content.decode()))

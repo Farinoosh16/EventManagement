@@ -1,17 +1,32 @@
 from kivy.app import App
-from kivy.uix.widget import Widget
-from kivy.app import Builder
-Builder.load_file('PongGame.kv')
+from kivy.uix.boxlayout import BoxLayout
+from KivyCalendar import DatePicker
+from kivy.core.window import Window
+from kivy.calendar_ui import DatePicker, CalendarWidget
+from kivymd.uix.label import MDLabel
+
+from kivy.app import App
+from kivy.uix.boxlayout import BoxLayout
+from kivy.uix.popup import Popup
+from KivyCalendar import CalendarWidget
+from kivy.core.window import Window
 
 
-class PongGame(Widget):
-    pass
+Window.clearcolor = (0.5, 0.5, 0.5, 1)
+
+class Calendar(BoxLayout):
+    def __init__(self):
+        super(Calendar, self).__init__()
+
+    def show_calendar(self):
+        datePicker = DatePicker()
+        datePicker.show_popup(1,.3)
 
 
-class PongApp(App):
+class Test(App):
     def build(self):
-        return PongGame()
+        return Calendar()
 
 
 if __name__ == '__main__':
-    PongApp().run()
+    Test().run()

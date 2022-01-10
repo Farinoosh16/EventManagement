@@ -1,33 +1,23 @@
-#:kivy 1.0.9
+<Calendar>:
+    BoxLayout:
+        orientation: "vertical"
+        padding : 20, 20
+        size_hint_y: .5
 
-<PongGame>:
-    canvas:
-        Rectangle:
-            pos: self.center_x - 5, 0
-            size: 10, self.height
+        Button:
+            on_press: root.show_calendar()
+            Image:
+                y: self.parent.y
+                center_x: self.parent.center_x
+                allow_stretch: True
+                source: 'cross.png'
 
-    Label:
-        font_size: 70
-        center_x: root.width / 4
-        top: root.top - 50
-        text: "0"
+        TextInput:
+            text:""
 
-    Label:
-        font_size: 70
-        center_x: root.width * 3 / 4
-        top: root.top - 50
-        text: "0"
+<DatePicker>:
+    pHint: .3, .3
 
 
-اموزش
 
-GridLayout:
-    cols:1
-    Button:
-        text:"hello world"
-    Button:
-        text:"click on me"
-        on_release:
-            print("Hi")
-#when you click on me , you can print Hi
 

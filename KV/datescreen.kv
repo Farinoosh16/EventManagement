@@ -1,0 +1,43 @@
+<DateScreen>:
+    FloatLayout:
+        canvas:
+            Color:
+                rgb: utils.get_color_from_hex("#FFFFFF")
+            Rectangle:
+                size: self.size
+                pos: self.pos
+        GridLayout:
+            canvas:
+                Color:
+                    rgb: utils.get_color_from_hex("#808080")
+                Rectangle:
+                    size: self.size
+                    pos: self.pos
+            rows:1
+            pos_hint:{"top":1,"left":1}
+            size_hint: 1.8,.1
+            Image:
+                source:"icons/Logo_Red_Yellow.png"
+        Label:
+            pos_hint:{"top":1,"left":1}
+            size_hint: 1,.1
+            text: root.t
+            multiline: False
+            write_tab: False
+        GridLayout:
+            rows: 1
+            size_hint: 1,.1
+            pos_hint: {"top": .5, "right": 1}
+            LabelButton:
+                text: "hi"
+                canvas.before:
+                    Color:
+                        rgb: utils.get_color_from_hex("#35477d") if self.state == 'normal' else utils.get_color_from_hex("#6C5B7B")
+                    Rectangle:
+                        size: self.size
+                        pos: self.pos
+                id: date_label
+                markup : True
+                #source: "icons/private.png"
+                on_release:
+                    app.show_date_picker()

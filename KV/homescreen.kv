@@ -3,7 +3,7 @@
     FloatLayout:
         canvas:
             Color:
-                rgb: utils.get_color_from_hex("#808080")
+                rgb: utils.get_color_from_hex("#FFFFFF")
             Rectangle:
                 size: self.size
                 pos: self.pos
@@ -33,12 +33,13 @@
             font_size: 32
             color:(211,211,211)
             bold: True
-            italic: True
-            id : events_label
+            italic: False
+            id:events_label
+
 
         ScrollView:
-            pos_hint:{"top": .6, "left" :1 }
-            size_hint: 1, .4
+            pos_hint:{"top":.6 ,"left":1}
+            size_hint:1,.4
             GridLayout:
                 id: banner_grid
                 cols:1
@@ -48,25 +49,35 @@
                 row_default_height: '100dp'
                 row_force_default: True
         GridLayout:
-            # add 3 menu buttons
+            # add 4 menu buttons
+            canvas:
+                Color:
+                    rgb: utils.get_color_from_hex("#808080")
+                Rectangle:
+                    size: self.size
+                    pos: self.pos
             rows:1
             pos_hint:{"top":.2,"left":1}
             size_hint: 1,.2
             ImageButton:
-                source: "icons/finance.png"
+                source: "icons/Add Event.png"
+                size_hint: .4,.2
+                on_release:
+                    app.change_screen("add_event_screen")
+            ImageButton:
+                source: "icons/Location-icon-design-on-transparent-background-PNG_white.png"
+                size_hint: .4,.2
                 on_release:
                     print("ok dude")
             ImageButton:
-                source: "icons/finance.png"
-                on_release:
-                    print("ok dude")
-            ImageButton:
-                source: "icons/profile.png"
+                source: "icons/Open Profile Icon.png"
+                size_hint: .4,.2
                 on_release:
                     app.change_screen("profile_screen")
 
             ImageButton:
-                source: "icons/finance.png"
+                source: "icons/Enter chat icon.png"
+                size_hint: .4,.2
                 on_release:
                     print("ok dude")
 

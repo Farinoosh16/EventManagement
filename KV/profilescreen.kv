@@ -2,16 +2,41 @@
 
 
 <ProfileScreen>:
-    GridLayout:
+    FloatLayout:
         canvas:
             Color:
-                rgb: utils.get_color_from_hex("#808080")
+                rgb: utils.get_color_from_hex("#FFFFFF")
             Rectangle:
                 size: self.size
                 pos: self.pos
-        rows:1
-        pos_hint:{"top":1,"left":.1}
-        size_hint: 1,.1
-        Image:
-            source:"icons/profile.png"
-            id : avatar_image
+        GridLayout:
+            canvas:
+                Color:
+                    rgb: utils.get_color_from_hex("#808080")
+                Rectangle:
+                    size: self.size
+                    pos: self.pos
+            rows:1
+            pos_hint:{"top":1,"left":1}
+            size_hint: 1.8,.1
+            Image:
+                source:"icons/Logo_Red_Yellow.png"
+        TextInput:
+            id: add_friend_input
+            hint_text: "Type friend id here"
+            size_hint: .6, .1
+            pos_hint: {"top": .8, "right": .8}
+            #on_text:
+                #self.focus = not self.focus if "\n" in self.text else self.focus
+        Label:
+            id: add_friend_label
+            size_hint: .5, .1
+            pos_hint: {"top": .2, "right": .5}
+
+        ImageButton:
+            source: "icons/back.png"
+            size_hint: .1, .2
+            pos_hint: {"top": .2, "right": .5}
+            on_release:
+                app.change_screen("home_screen")
+
