@@ -45,18 +45,20 @@
                 id: event_image_grid
 
         TextInput:
-            hint_text: " event name"
             size_hint: .8, .1
             pos_hint: {"top": .62, "right": .9}
-            id:'event_name'
+            hint_text: "event name"
+            id:name_input
             on_text:
+                self.background_color = (1,1,1,1)
                 self.focus = not self.focus if "\n" in self.text else self.focus
         TextInput:
-            hint_text: "event song"
             size_hint: .8, .1
             pos_hint: {"top": .52, "right": .9}
-            id:'event_song'
+            hint_text: "event song"
+            id:song_input
             on_text:
+                self.background_color = (1,1,1,1)
                 self.focus = not self.focus if "\n" in self.text else self.focus
         GridLayout:
             rows: 1
@@ -153,7 +155,7 @@
                 app.change_screen("home_screen")
         LabelButton:
             text: "[u]when to meet[/u]"
-            #id : date_label
+            id : date_label
             canvas.before:
                 Color:
                     rgb: utils.get_color_from_hex("#35477d") if self.state == 'normal' else utils.get_color_from_hex("#6C5B7B")
@@ -164,7 +166,7 @@
             pos_hint: {"top": .1, "right": .3}
             markup: True
             on_release:
-                app.change_screen("date_screen")
-                #app.show_date_picker()
+                #app.change_screen("date_screen")
+                app.show_date_picker()
 
 

@@ -22,10 +22,18 @@ from kivy.lang import Builder
 import time
 import calendar
 from datetime import date
+from kivy.properties import DictProperty
 from eventbanner import EventBanner
 import requests
 import json
 from kivy.app import App
+import kivy.utils
+from kivy.utils import platform
+import requests
+import json
+import traceback
+from kivy.graphics import Color, RoundedRectangle
+
 
 
 class HomeScreen(Screen):
@@ -35,9 +43,17 @@ class HomeScreen(Screen):
     pass
 class LoginScreen(Screen):
     pass
+class RuleScreen(Screen):
+    t = str(date.today())
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
+    pass
 class ForgetScreen(Screen):
     pass
 class ProfileScreen(Screen):
+    t = str(date.today())
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
     pass
 class AddEventScreen(Screen):
     t = str(date.today())
@@ -50,6 +66,11 @@ class DateScreen(Screen):
         super().__init__(**kwargs)
     pass
 
+class LocationScreen(Screen):
+    t = str(date.today())
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
+    pass
 class ImageButton(ButtonBehavior, Image):
     pass
 class LabelButton(ButtonBehavior , Label):
@@ -58,17 +79,27 @@ class LabelButton(ButtonBehavior , Label):
 class SignupScreen(Screen):
     pass
 
+class ChatScreen(Screen):
+    t = str(date.today())
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
+    pass
 
 GUI = Builder.load_file('main.kv')
 
 class MainApp(MDApp):
-    #event_image = None
-    #option_choice = None
+    my_friend_id = ""
+    event_image_widget = ""
+    previous_event_image_widget = None
+    refresh_token_file = "refresh_token.txt"
+    event_image = None
+    option_choice = None
+    my_firebase = None
     def build(self):
         self.my_firebase = MyFirebase()
         return GUI
-    #def update_event_image(self, filename, widget_id):
-        #self.event_image = filename
+    def update_event_image(self, filename, widget_id):
+        self.event_image = filename
 
 
     def on_start(self):
@@ -77,7 +108,7 @@ class MainApp(MDApp):
         for root_dir, folders, files in walk("icons/events"):
             for f in files:
                 if '.png' in f:
-                    img = ImageButton(source="icons/events/" + f)
+                    img = ImageButton(source="icons/events/" + f, on_release=partial(self.update_event_image, f))
                     event_image_grid.add_widget(img)
 
 
@@ -88,10 +119,12 @@ class MainApp(MDApp):
 
         try:
             #try to read refresh token
-            with open("refresh_Token.txt", 'r') as f:
+            with open(self.refresh_token_file, 'r') as f:
                 refresh_token=f.read()
             # use refreshtoken to get new idtoken
             id_token,local_id = self.my_firebase.exchange_refresh_token(refresh_token)
+            self.local_id = local_id
+            self.id_token = id_token
             # get the database
 
             result = requests.get("https://wazzup-1bca4-default-rtdb.firebaseio.com/" +local_id + ".json?auth=" + id_token)
@@ -99,6 +132,19 @@ class MainApp(MDApp):
             print("was it ok?", result.ok)
             print(result.json())
             data = json.loads(result.content.decode())
+            print(data)
+
+            # get event grid
+            banner_grid = self.root.ids['home_screen'].ids['banner_grid']
+            print("---")
+            print(data['events'])
+            events = data['events']
+            event_keys = events.keys()
+            for event_key in event_keys:
+                event = events[event_key]
+                # populate workout grid in home screen
+                W = EventBanner(event_image=event['event_image'], event_name=event['event_name'], date=['date'])
+                banner_grid.add_widget(W)
 
             # get and update avatar image
             #avatar_image= self.root.ids['profile_screen'].ids['avatar_image']
@@ -115,27 +161,20 @@ class MainApp(MDApp):
             #print(data)
 
             # get and update the first label
-            #user_id_label=self.root.ids['setting_screen'].ids['user_id_label']
-            #user_id_label.text="USER ID: " + str(self.new_user_id)
-
-
-            #banner_grid= self.root.ids['home_screen'].ids['banner_grid']
-            #events = data['events'][1:]
-            #for event in events:
-                #for i in range(5):
-                    # populate workout grid in home screen
-                    #E =EventBanner(event_image=event['event_image'],description= event['description'])
-                    #banner_grid.add_widget(E)
+            #riend_id_label=self.root.ids['setting_screen'].ids['friend_id_label']
+            #friend_id_label.text="USER ID: " + str(self.new_friend_id)
 
 
 
             self.change_screen("home_screen")
-        except:
+
+        except Exception as e:
+            print(e)
             pass
 
 
 
-    def change_screen(self, screen_name):
+    def change_screen (self, screen_name):
         screen_manager= self.root.ids['screen_manager']
         screen_manager.current = screen_name
         pass
@@ -144,7 +183,7 @@ class MainApp(MDApp):
     #in calendar you click on OK
 
     def on_save(self, instance, value , date_range):
-        self.root.ids['date_screen'].ids['date_label'].text = str(value)
+        self.root.ids['add_event_screen'].ids['date_label'].text = str(value)
 
     def show_date_picker(self):
         date_dialog = MDDatePicker()
@@ -155,24 +194,23 @@ class MainApp(MDApp):
         # Get data from all fields in add event screen
         event_ids = self.root.ids['add_event_screen'].ids
         # Already have workout image in self.workout_image variable
-        #print(self.root.ids['add_event_screen'].ids['event_name'].text)
-        #event_song = self.root.ids['event_song'].text.replace("\n","")
-        # Already have option choice in self.option_choice
-        number_label = event_ids['number_label'].text
+        name_input = event_ids['name_input'].text
+        song_input = event_ids['song_input'].text
         number_input = event_ids['number_input'].text
         month_input = event_ids['month_input'].text
         day_input = event_ids['day_input'].text
         year_input = event_ids['year_input'].text
+        date_label = event_ids['date_label'].text
 
         # Make sure fields aren't garbage
         #if self.event_image == None:
             #print("back to this later")
             #return
         # They are allowed to leave no description
-        #if self.option_choice == None:
-            #event_ids['private_label'].color = (1, 0, 0, 1)
-            #event_ids['back_label'].color = (1, 0, 0, 1)
-            #return
+        if self.option_choice == None:
+            event_ids['private_label'].color = (1, 0, 0, 1)
+            event_ids['back_label'].color = (1, 0, 0, 1)
+            return
         try:
             int_number = int(number_input)
         except:
@@ -203,7 +241,14 @@ class MainApp(MDApp):
             event_ids['year_input'].background_color = (1, 0, 0, 1)
             return
 
+        # If all data is ok, send the data to firebase real-time database
+        event_payload = {"event_image": self.event_image, "event_name": name_input, "event_song": song_input,
+                         "number": int(number_input), "type_event": self.option_choice, "date": month_input + "/" +
+                                                                                                day_input + "/20" + year_input , "dates" : date_label }
+        event_request = requests.post("https://wazzup-1bca4-default-rtdb.firebaseio.com/%s/events.json?auth=%s"
+                                        % (self.local_id, self.id_token), data=json.dumps(event_payload))
 
 
 
+        print(event_request.json())
 MainApp().run()

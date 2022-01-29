@@ -41,7 +41,7 @@ class MyFirebase():
             #update firebase's user id field
 
             #Create new key in database from localId
-            my_data='{"email": "" , "password" : ""  , "avatar":"", "my_friend_id" : %s}' % my_friend_id
+            my_data='{"email": "" , "password" : ""  , "avatar":"", "events" : "",   "my_friend_id" : %s}' % my_friend_id
             post_request= requests.patch("https://wazzup-1bca4-default-rtdb.firebaseio.com/"+localId+".json?auth="+idToken,data=my_data)
             print(post_request.ok)
             print(json.loads(post_request.content.decode()))

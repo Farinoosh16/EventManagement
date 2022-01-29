@@ -2,9 +2,13 @@
 #: include KV/signupscreen.kv
 #: include KV/loginscreen.kv
 #: include KV/forgetscreen.kv
+#: include KV/rulescreen.kv
 #: include KV/profilescreen.kv
 #: include KV/addeventscreen.kv
 #: include KV/datescreen.kv
+#: include KV/datescreen.kv
+#: include KV/locationscreen.kv
+#: include KV/chatscreen.kv
 
 
 GridLayout:
@@ -29,12 +33,22 @@ GridLayout:
             ForgetScreen:
                 name:"forget_screen"
                 id: forget_screen
+            RuleScreen:
+                name:"rule_screen"
+                id: rule_screen
             AddEventScreen:
                 name:"add_event_screen"
                 id: add_event_screen
             DateScreen:
                 name:"date_screen"
                 id: date_screen
+            LocationScreen:
+                name:"location_screen"
+                id: location_screen
+            ChatScreen:
+                name:"chat_screen"
+                id: chat_screen
+
 
 
 

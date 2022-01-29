@@ -1,0 +1,74 @@
+#: import utils kivy.utils
+
+<RuleScreen>:
+    FloatLayout:
+        canvas:
+            Color:
+                rgb: utils.get_color_from_hex("#35477d")
+            Rectangle:
+                size: self.size
+                pos: self.pos
+
+        GridLayout:
+            canvas:
+                Color:
+                    rgb: utils.get_color_from_hex("#808080")
+                Rectangle:
+                    size: self.size
+                    pos: self.pos
+            rows:1
+            pos_hint:{"top":1,"left":1}
+            size_hint: 1.8,.1
+            Image:
+                source:"icons/Logo_Red_Yellow.png"
+        Label:
+            pos_hint:{"top":1,"left":1}
+            size_hint: 1,.1
+            text: root.t
+            multiline: False
+            write_tab: False
+        ScrollView:
+            bar_width: 10
+            pos_hint:{"top":.9,"left":1}
+            Label:
+                # rule grid
+                id: rule_grid
+                cols: 1
+                size_hint_y: None
+                text: " Terms of Service Overview Below is an overview of our Terms of Service for our [b]“Platform”[/b], which means any website, application, or service we offer. You should read the complete Terms of Service because that document (and not this overview) is our legally binding agreement.The Terms of Service includes information about your legal rights and covers areas such as automatic subscription renewals,limitations of liability, resolution of disputes by mandatory arbitration rather than a judge or jury in a court of law, and a class action waiver.[u] Your Relationship with Wazzup :[/u] By using our Platform, you are agreeing to our Terms of Service. The Terms of Service are a legally binding agreement between you and Wazzup If you break the rules, we may suspend or terminate your account. We charge for certain aspects of our Platform, and some of these fees are billed on a regular and recurring basis (unless you disable auto-renewal or cancel your subscription). [b][u] Wazzup Groups, Organizers and Members[/b][/u] : Organizers may establish membership criteria for their own Wazzup groups. While there is probably a Wazzup group out there for everyone, not every Wazzup group is for you. If you can’t find the right group, you can easily start your own Wazzup group. Organizers may charge fees for memberships or events. Using our Platform involves meeting real people and doing real things in the real world, which can sometimes lead to unexpected situations. We can’t control what happens in the real world, and we are not responsible for it. You should use common sense and good judgment when interacting with others. [b][u]Your Content and Content of Others[/b][/u] : You are responsible for your “Content”, which means any information, material, or other content posted to our Platform. Your Content must comply with our Terms of Service, which includes the Usage and Content Policies, Groups and Events Policies, Organizer and Leadership Standards, Member Restrictions, Payment Policies, Trademark Usage Guidelines, and API License Terms. Your Content is also subject to our Intellectual Property Dispute Policies.We do not own the Content that you post. However, we do require that you provide us a license to use this Content in order for us to operate, improve, promote, and protect Meetup and our Platform for the benefit of you and others. We are not responsible for Content that members post or the communications that members send using our Platform. We generally don’t review Content before it’s posted. If you see Content that violates our Terms of Service, you may report inappropriate Content to us. [b][u]Our Platform[/b][/u] : We try hard to make sure that our Platform is always available and working, but we cannot guarantee it will be. Occasionally things may not go exactly as planned. We apologize in advance for any inconvenience.We are continually improving our Platform. This means that we may modify or discontinue portions of our Platform.By using our Platform, you agree to the limitations of liability and release in our Terms of Service. You also agree to resolve any disputes you may have with us in the manner described in the Terms of Service. Unless you are based in the European Union, you agree to mandatory arbitration and waive your right to seek relief from a judge or jury in a court of law. Claims can only be brought individually, and not as part of a class action.You may be based in a country where the laws that apply provide for different or additional rights and obligations. These Terms of Service will point out areas of difference.Terms of Service:Our Terms of Service contain important information about your legal rights. To make it easier to understand, we have provided summaries and tips in these gray boxes. These summaries are not part of the official terms, and it is important for you to read the language in each section carefully.1. This Agreement Summary: You agree to follow some basic rules when using Wazzup’s Platform. These rules are described in these Terms of Service, including the related policies and guidelines discussed below. We may change these rules.1.1 The Agreement. Wazzup enables you and other members to arrange offline, real-world Wazzup groups and Wazzup events. The terms “Wazzup,” “we,” “us,” and “our” include Wazzup, Inc. and our corporate parent, affiliates, or subsidiaries. We use the terms “you” and “your” to mean any person using our Platform, and any organization or person using the Platform on an organization’s behalf. We use the word “Platform” to mean any website, application, or service offered by Wazzup, including content we offer and electronic communications we send. We provide our Platform to you subject to these Terms of Service. We use the terms “Terms of Service” and “Agreement” interchangeably to mean this document together with our Usage and Content Policies, Groups and Events Policies, Organizer and Leadership Standards, Member Restrictions, Payment Policies, Trademark Usage Guidelines, and API License Terms. Your use of the Platform signifies that you agree to this Agreement. If you are using the Platform for an organization, you agree to this Agreement on behalf of that organization, and represent you have authority to bind that organization to the terms contained in this Agreement. If you do not or are unable to agree to this Agreement, do not use our Platform."
+                height: self.texture_size[1]
+                text_size: self.width, None
+                padding: 50,50
+        GridLayout:
+            # add 4 menu buttons
+            canvas:
+                Color:
+                    rgb: utils.get_color_from_hex("#808080")
+                Rectangle:
+                    size: self.size
+                    pos: self.pos
+            rows:1
+            pos_hint:{"top":.2,"left":1}
+            size_hint: 1,.2
+            LabelButton:
+                text: "[u] I agree [/u]"
+                id : agree_label
+                size_hint: .4,.2
+                canvas.before:
+                    Color:
+                        rgb: utils.get_color_from_hex("#35477d") if self.state == 'normal' else utils.get_color_from_hex("#6C5B7B")
+                    Rectangle:
+                        size: self.size
+                        pos: self.pos
+                markup: True
+                size_hint: .7,.1
+                pos_hint:{"top": .1, "right" : .85}
+
+                markup: True
+                on_text:
+                    self.background_color = (1,1,1,1)
+                    self.focus = not self.focus if "\n" in self.text else self.focus
+                on_release:
+                    app.change_screen("login_screen")
+
+

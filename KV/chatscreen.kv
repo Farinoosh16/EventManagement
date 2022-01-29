@@ -1,7 +1,6 @@
 #: import utils kivy.utils
 
-
-<ProfileScreen>:
+<ChatScreen>:
     FloatLayout:
         canvas:
             Color:
@@ -9,6 +8,7 @@
             Rectangle:
                 size: self.size
                 pos: self.pos
+
         GridLayout:
             canvas:
                 Color:
@@ -21,17 +21,22 @@
             size_hint: 1.8,.1
             Image:
                 source:"icons/Logo_Red_Yellow.png"
-        TextInput:
-            id: add_friend_input
-            hint_text: "Type your user name here"
-            size_hint: .6, .1
-            pos_hint: {"top": .8, "right": .8}
-            #on_text:
-                #self.focus = not self.focus if "\n" in self.text else self.focus
         Label:
-            id: add_friend_label
-            size_hint: .5, .1
-            pos_hint: {"top": .2, "right": .5}
+            pos_hint:{"top":1,"left":1}
+            size_hint: 1,.1
+            text: root.t
+            multiline: False
+            write_tab: False
+        Label:
+            # chat_label
+            pos_hint:{"top":.9,"left":1}
+            size_hint: 1,.1
+            text: " Start chatting!"
+            font_size: 32
+            color:(211,211,211)
+            bold: True
+            italic: False
+            id:events_label
         LabelButton:
             text: "[u]Back[/u]"
             canvas.before:
@@ -45,9 +50,3 @@
             markup: True
             on_release:
                 app.change_screen("home_screen")
-        #ImageButton:
-            #source: "icons/back.png"
-            #size_hint: .1, .2
-            #pos_hint: {"top": .2, "right": .5}
-            #on_release:
-                #app.change_screen("home_screen")

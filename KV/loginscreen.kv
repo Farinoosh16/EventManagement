@@ -47,11 +47,22 @@
             text:"WAZZ my password?"
             markup: True
             size_hint: .7,.1
-            pos_hint:{"top": .3, "left" : .9}
+            pos_hint:{"top": .3, "right" : .85}
             on_release:
                 app.change_screen("forget_screen")
-
-
+        LabelButton:
+            text:"terms and conditions"
+            canvas.before:
+                Color:
+                    rgb: utils.get_color_from_hex("#35477d") if self.state == 'normal' else utils.get_color_from_hex("#6C5B7B")
+                Rectangle:
+                    size: self.size
+                    pos: self.pos
+            markup: True
+            size_hint: .7,.1
+            pos_hint:{"top": .1, "right" : .85}
+            on_release:
+                app.change_screen("rule_screen")
 
 
 
